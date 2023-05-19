@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react';
 import jwt_decode from "jwt-decode";
+import { doesUserExist } from "../utils/userUtils";
 
 const Login = () => {
 
   const handleLoginSuccess = response => {
-    const userObject = jwt_decode(response.credential);
-    console.log(userObject);
+    const { email, given_name, family_name } = jwt_decode(response.credential);
+
+    doesUserExist(email);
+
+    const userObject = {
+      email,
+      fullname: `${given_name} ${family_name}`
+    }
   }
 
   useEffect(() => {
