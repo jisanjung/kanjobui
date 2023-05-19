@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import jwt_decode from "jwt-decode";
 
 const Login = () => {
 
   const handleLoginSuccess = response => {
-    console.log(`jwt token: ${response.credential}`);
+    const userObject = jwt_decode(response.credential);
+    console.log(userObject);
   }
 
   useEffect(() => {
