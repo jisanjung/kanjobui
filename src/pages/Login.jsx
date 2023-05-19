@@ -4,10 +4,11 @@ import { doesUserExist } from "../utils/userUtils";
 
 const Login = () => {
 
-  const handleLoginSuccess = response => {
+  const handleLoginSuccess = async response => {
     const { email, given_name, family_name } = jwt_decode(response.credential);
 
-    doesUserExist(email);
+    const userExists = await doesUserExist(email);
+    console.log(userExists);
 
     const userObject = {
       email,
