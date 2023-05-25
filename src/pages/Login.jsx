@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
 import jwt_decode from "jwt-decode";
-import { doesUserExist } from "../utils/userUtils";
+import { doesUserExist, addUser } from "../utils/userUtils";
 
 const Login = () => {
 
   const handleLoginSuccess = async response => {
     const { email, given_name, family_name } = jwt_decode(response.credential);
 
-    const userExists = await doesUserExist(email);
-    console.log(userExists);
-
     const userObject = {
       email,
       fullname: `${given_name} ${family_name}`
+    }
+
+    const userExists = await doesUserExist(email);
+    if (userExists) {
+      console.log(userObject);
+    } else {
+      const userAdded = await addUser(userObject);
+      console.log(userAdded);
     }
   }
 
