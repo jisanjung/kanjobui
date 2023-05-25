@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import jwt_decode from "jwt-decode";
 import { doesUserExist, addUser } from "../utils/userUtils";
+const { VITE_GOOGLE_CLIENT_ID, VITE_GOOGLE_CLIENT_SECRET } = import.meta.env;
 
 const Login = () => {
 
@@ -13,16 +14,16 @@ const Login = () => {
     }
 
     const userExists = await doesUserExist(email);
-    if (userExists) {
-      console.log(userObject);
-    } else {
+    if (!userExists) {
       const userAdded = await addUser(userObject);
       console.log(userAdded);
     }
+
+    localStorage.clear();
+    localStorage.setItem("currentUser", JSON.stringify(userObject));
   }
 
   useEffect(() => {
-    const { VITE_GOOGLE_CLIENT_ID, VITE_GOOGLE_CLIENT_SECRET } = import.meta.env;
     /* global google */
     google.accounts.id.initialize({
       client_id: VITE_GOOGLE_CLIENT_ID,
