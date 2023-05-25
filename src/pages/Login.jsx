@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import jwt_decode from "jwt-decode";
 import { doesUserExist, addUser } from "../utils/userUtils";
-const { VITE_GOOGLE_CLIENT_ID, VITE_GOOGLE_CLIENT_SECRET } = import.meta.env;
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
 
@@ -23,22 +23,13 @@ const Login = () => {
     localStorage.setItem("currentUser", JSON.stringify(userObject));
   }
 
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: VITE_GOOGLE_CLIENT_ID,
-      callback: handleLoginSuccess
-    });
-    google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      { theme: "outline", size: "large" }
-    );
-  }, []);
-
   return (
     <h1>
         Login
-        <div id='signInDiv'></div>
+        <GoogleLogin
+          onSuccess={handleLoginSuccess}
+          onError={err => console.log(err)}
+        />
     </h1>
   )
 }
