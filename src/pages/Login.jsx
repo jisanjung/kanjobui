@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import jwt_decode from "jwt-decode";
 import { doesUserExist, addUser } from "../utils/userUtils";
 import { GoogleLogin } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
   const handleLoginSuccess = async response => {
     const { email, given_name, family_name } = jwt_decode(response.credential);
@@ -21,6 +24,8 @@ const Login = () => {
 
     localStorage.clear();
     localStorage.setItem("currentUser", JSON.stringify(userObject));
+
+    navigate("/home");
   }
 
   return (
