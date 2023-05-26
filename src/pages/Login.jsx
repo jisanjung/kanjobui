@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import jwt_decode from "jwt-decode";
 import { doesUserExist, addUser } from "../utils/userUtils";
 import { GoogleLogin } from '@react-oauth/google';
@@ -8,9 +8,16 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userObject = JSON.parse(localStorage.getItem("currentUser"));
+    if (userObject && userObject.email) {
+      navigate("/home");
+    }
+  }, []);
+
   const handleLoginSuccess = async response => {
     const { email, given_name, family_name } = jwt_decode(response.credential);
-
+    
     const userObject = {
       email,
       fullname: `${given_name} ${family_name}`
