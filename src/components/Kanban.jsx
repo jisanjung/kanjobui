@@ -1,6 +1,7 @@
 import { DragDropContext } from '@hello-pangea/dnd'
 import React from 'react'
 import Column from './Column';
+import { APPLIED_COLUMN_TITLE, INTERVIEW_COLUMN_TITLE, IN_PROGRESS_COLUMN_TITLE, OFFER_COLUMN_TITLE } from '../utils/constants';
 
 const testData = [
     {
@@ -20,10 +21,10 @@ const testData = [
 const Kanban = () => {
   return (
     <DragDropContext onDragEnd={(result) => console.log(result)}>
-        <Column title="Applied" items={testData} id="applied"/>
-        <Column title="Interview" items={[]} id="interview"/>
-        <Column title="In Progress" items={[]} id="in_progress"/>
-        <Column title="Offer" items={[]} id="offer"/>
+        <Column title={APPLIED_COLUMN_TITLE} items={testData} id={APPLIED_COLUMN_TITLE}/>
+        <Column title={INTERVIEW_COLUMN_TITLE} items={[]} id={INTERVIEW_COLUMN_TITLE}/>
+        <Column title={IN_PROGRESS_COLUMN_TITLE} items={[]} id={IN_PROGRESS_COLUMN_TITLE}/>
+        <Column title={OFFER_COLUMN_TITLE} items={[]} id={OFFER_COLUMN_TITLE}/>
     </DragDropContext>
   )
 }
